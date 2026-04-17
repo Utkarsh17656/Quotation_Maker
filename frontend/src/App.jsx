@@ -16,7 +16,7 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
-const Settings = () => <div className="p-8 flex flex-col h-full"><h1 className="text-2xl font-semibold mb-4">Settings</h1><div className="flex-1 flex items-center justify-center border-2 border-dashed border-gray-200 rounded-xl text-gray-400">Settings page under construction...</div></div>;
+import Settings from './pages/Settings';
 
 export default function App() {
   const { checkAuth, loading } = useAuthStore();

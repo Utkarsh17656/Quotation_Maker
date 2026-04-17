@@ -1,6 +1,6 @@
 # QuoteCraft - Modern SaaS Quotation Generator
 
-QuoteCraft is a production-ready, full-stack SaaS application for creating, managing, and exporting professional business quotations and invoices. Drawing inspiration from modern platforms like Refrens, it offers a premium, responsive UI featuring a split-pane Quotation Builder with real-time PDF preview functionality.
+QuoteCraft is a production-ready, full-stack SaaS application for creating, managing, and exporting professional business quotations and invoices. It offers a premium, responsive UI featuring a split-pane Quotation Builder with real-time PDF preview functionality.
 
 Built to be fast, scalable, and aesthetically pleasing with intelligent auto-calculations and comprehensive client management.
 

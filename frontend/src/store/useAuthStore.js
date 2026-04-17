@@ -41,6 +41,21 @@ const useAuthStore = create((set) => ({
       localStorage.removeItem('refresh_token');
       set({ user: null, isAuthenticated: false, loading: false });
     }
+  },
+
+  updateProfile: async (formData) => {
+    try {
+      // Allow sending FormData directly for file uploads
+      const response = await axiosClient.patch('auth/profile/', formData, {
+        headers: {
+          'Content-Type': formData instanceof FormData ? 'multipart/form-data' : 'application/json',
+        },
+      });
+      set({ user: response.data });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   }
 }));
 

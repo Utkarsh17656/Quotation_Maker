@@ -17,7 +17,9 @@ class Client(models.Model):
     email = models.EmailField(blank=True, null=True)
     phone = models.CharField(max_length=50, blank=True, null=True)
     address = models.TextField(blank=True, null=True)
+    zip_code = models.CharField(max_length=20, blank=True, null=True)
     gst_number = models.CharField(max_length=50, blank=True, null=True)
+    custom_fields = models.JSONField(default=list, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -54,6 +56,7 @@ class Quotation(models.Model):
     
     notes = models.TextField(blank=True, null=True)
     terms = models.TextField(blank=True, null=True)
+    custom_fields = models.JSONField(default=list, blank=True)
     
     subtotal = models.DecimalField(max_digits=12, decimal_places=2, default=0)
     total_tax = models.DecimalField(max_digits=12, decimal_places=2, default=0)

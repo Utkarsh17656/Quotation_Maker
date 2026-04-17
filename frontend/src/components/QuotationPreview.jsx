@@ -8,19 +8,35 @@ export default function QuotationPreview({ data, client }) {
   const businessName = user?.company_name || user?.username || 'Your Business';
   const businessAddress = user?.company_address || '';
   const businessGst = user?.gst_number || '';
+  const businessLogo = user?.logo;
   
   const clientName = client?.name || 'Client Name';
   const clientAddress = client?.address || '';
+  const clientZip = client?.zip_code || '';
   const clientEmail = client?.email || '';
+
+  // Handle logo URL
+  const getLogoUrl = (url) => {
+    if (!url) return null;
+    if (url.startsWith('http')) return url;
+    return `http://localhost:8000${url}`; // Adjust if your backend port is different
+  };
 
   return (
     <div className="bg-white mx-auto shadow-sm" style={{ width: '210mm', minHeight: '297mm', padding: '20mm', fontFamily: 'Inter, sans-serif' }} id="quotation-print-area">
       {/* Header */}
       <div className="flex justify-between items-start border-b border-gray-200 pb-8 mb-8">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-1">{businessName}</h1>
-          <p className="text-sm text-gray-600 whitespace-pre-wrap">{businessAddress}</p>
-          {businessGst && <p className="text-sm text-gray-600 mt-1">GSTIN: {businessGst}</p>}
+        <div className="flex items-start">
+          {businessLogo && (
+            <div className="mr-6">
+              <img src={getLogoUrl(businessLogo)} alt="Logo" className="max-h-24 max-w-48 object-contain" />
+            </div>
+          )}
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 mb-1">{businessName}</h1>
+            <p className="text-sm text-gray-600 whitespace-pre-wrap">{businessAddress}</p>
+            {businessGst && <p className="text-sm text-gray-600 mt-1">GSTIN: {businessGst}</p>}
+          </div>
         </div>
         <div className="text-right">
           <h2 className="text-4xl font-light text-brand-600 mb-4 uppercase tracking-widest">Quotation</h2>
@@ -45,12 +61,29 @@ export default function QuotationPreview({ data, client }) {
         </div>
       </div>
 
-      {/* Bill To */}
-      <div className="mb-10">
-        <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Quotation For</h3>
-        <p className="text-lg font-semibold text-gray-900">{clientName}</p>
-        <p className="text-sm text-gray-600 mb-1">{clientEmail}</p>
-        <p className="text-sm text-gray-600 whitespace-pre-wrap">{clientAddress}</p>
+      <div className="grid grid-cols-2 gap-8 mb-10">
+        {/* Bill To */}
+        <div>
+          <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Quotation For</h3>
+          <p className="text-lg font-semibold text-gray-900">{clientName}</p>
+          <p className="text-sm text-gray-600 mb-1">{clientEmail}</p>
+          <div className="text-sm text-gray-600 whitespace-pre-wrap">
+            {clientAddress}
+            {clientZip && <span className="block mt-1">Postal Code: {clientZip}</span>}
+          </div>
+        </div>
+
+        {/* Custom Fields (Top section for metadata-like fields) */}
+        <div className="text-right">
+           <div className="space-y-2">
+             {data.custom_fields && data.custom_fields.map((field, i) => (
+                <div key={i} className="text-sm">
+                  <span className="font-semibold text-gray-700">{field.label}:</span>
+                  <span className="ml-2 text-gray-900">{field.value}</span>
+                </div>
+             ))}
+           </div>
+        </div>
       </div>
 
       {/* Items Table */}
